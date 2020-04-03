@@ -4,6 +4,9 @@ version: 0.0.2
 author: "Lung Razvan (long1eu)<lung.razvan@gmail.com>"
 homepage: http://www.long1.eu
 
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
