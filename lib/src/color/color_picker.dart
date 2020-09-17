@@ -30,8 +30,7 @@ const double _kSizeRatio = 1.5;
 const int _kCrossAxisCount = 4;
 
 /// The width of a secondary color box.
-const double _secondaryColorBoxWidth =
-    (_mainColorsBarWidth - (_kCrossAxisCount - 1) * _kCrossAxisSpacing) / 4;
+const double _secondaryColorBoxWidth = (_mainColorsBarWidth - (_kCrossAxisCount - 1) * _kCrossAxisSpacing) / 4;
 
 /// The height of a secondary color box.
 const double _secondaryColorBoxHeight = _secondaryColorBoxWidth / _kSizeRatio;
@@ -44,10 +43,7 @@ const double kWidgetWidth = _mainColorsBarWidth + _kMarginSize * 2;
 /// The widget height base on the 4 margins(there a re two between color rows),
 /// the size of a primary box, two heights of the secondary box, and the cross
 /// axis space between them.
-const double kWidgetHeight = _kMarginSize * 4 +
-    _kColorBoxSize +
-    _secondaryColorBoxHeight * 2 +
-    _kCrossAxisSpacing;
+const double kWidgetHeight = _kMarginSize * 4 + _kColorBoxSize + _secondaryColorBoxHeight * 2 + _kCrossAxisSpacing;
 
 /// This sets the animation for both the selection frame and for the secondary
 /// color shifting.
@@ -59,8 +55,7 @@ class ColorPicker extends PickerBase<Color> {
     this.elevation,
     this.onColor,
     this.type,
-  })
-      : super();
+  }) : super();
 
   /// The [Color] you want to initialize the picker with. If the color is not in
   /// the list then black is selected.
@@ -80,8 +75,7 @@ class ColorPicker extends PickerBase<Color> {
   _ColorPickerState createState() => new _ColorPickerState();
 }
 
-class _ColorPickerState extends State<ColorPicker>
-    with TickerProviderStateMixin {
+class _ColorPickerState extends State<ColorPicker> with TickerProviderStateMixin {
   /// This is the color list that is displayed on the secondary row, and it
   /// updates on animation with the new colors gradually.
   List<Color> _lastColorList;
@@ -120,8 +114,7 @@ class _ColorPickerState extends State<ColorPicker>
       i++;
     });
 
-    if (_lastColorList == null)
-      _lastColorList = colorList[mainColors[0]].toList();
+    if (_lastColorList == null) _lastColorList = colorList[mainColors[0]].toList();
   }
 
   _onDragUpdate(DragUpdateDetails details, RenderFittedBox renderObject) {
@@ -146,11 +139,9 @@ class _ColorPickerState extends State<ColorPicker>
   }
 
   void _moveFrameToPosition() {
-    AnimationController controller = new AnimationController(
-        duration: const Duration(milliseconds: _kFrameAnimationDuration),
-        vsync: this);
-    CurvedAnimation curve =
-        new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+    AnimationController controller =
+        new AnimationController(duration: const Duration(milliseconds: _kFrameAnimationDuration), vsync: this);
+    CurvedAnimation curve = new CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
 
     double endPoint = _lastKnownColorIndex * _kColorBoxSize;
     Animation animation;
@@ -158,8 +149,7 @@ class _ColorPickerState extends State<ColorPicker>
       ..addListener(() {
         setState(() {
           _dragPosition = animation.value;
-          if (controller.status == AnimationStatus.completed)
-            controller.dispose();
+          if (controller.status == AnimationStatus.completed) controller.dispose();
         });
       });
 
@@ -174,20 +164,17 @@ class _ColorPickerState extends State<ColorPicker>
   }
 
   void _showColors() {
-    AnimationController controller = new AnimationController(
-        duration: const Duration(milliseconds: _kFrameAnimationDuration),
-        vsync: this);
+    AnimationController controller =
+        new AnimationController(duration: const Duration(milliseconds: _kFrameAnimationDuration), vsync: this);
 
     Animation animation;
-    animation =
-        new Tween(begin: 0.0, end: _lastColorList.length).animate(controller)
-          ..addListener(() {
-            int position =
-                (animation.value * _lastColorList.length / 10).ceil();
-            if (position == _currentColorChangeIndex) return;
+    animation = new Tween(begin: 0.0, end: _lastColorList.length).animate(controller)
+      ..addListener(() {
+        int position = (animation.value * _lastColorList.length / 10).ceil();
+        if (position == _currentColorChangeIndex) return;
 
-            setState(() => _currentColorChangeIndex = position);
-          });
+        setState(() => _currentColorChangeIndex = position);
+      });
 
     controller.forward();
   }
@@ -222,8 +209,7 @@ class _ColorPickerState extends State<ColorPicker>
 
   @override
   Widget build(BuildContext context) {
-    List<Color> currentColorList = colorList[mainColors[_lastKnownColorIndex]]
-        .sublist(0, _currentColorChangeIndex);
+    List<Color> currentColorList = colorList[mainColors[_lastKnownColorIndex]].sublist(0, _currentColorChangeIndex);
 
     _lastColorList.replaceRange(0, _currentColorChangeIndex, currentColorList);
 
@@ -247,8 +233,7 @@ class _ColorPickerState extends State<ColorPicker>
       if (color == _selectedColor) {
         stackChildren.add(
           new Container(
-            decoration: new BoxDecoration(
-                shape: BoxShape.circle, color: Colors.white70),
+            decoration: new BoxDecoration(shape: BoxShape.circle, color: Colors.white70),
             child: new Icon(Icons.check),
             margin: new EdgeInsets.all(4.0),
           ),
@@ -279,7 +264,7 @@ class _ColorPickerState extends State<ColorPicker>
             new Container(
               padding: new EdgeInsets.all(_kMarginSize),
               child: new Stack(
-                overflow: Overflow.visible,
+                // overflow: Overflow.visible,
                 children: <Widget>[
                   mainColorBox,
                   new Positioned(
